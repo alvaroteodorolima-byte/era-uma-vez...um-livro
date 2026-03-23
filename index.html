@@ -170,74 +170,89 @@
       opacity: 0.8;
     }
 
+
+    /* ── TICKET BUTTON ── */
+    .ticket-wrap {
+      margin-top: 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .ticket-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-family: 'IM Fell English', serif;
+      font-size: 0.85rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 0.9rem 2.2rem;
+      border: 1px solid var(--gold);
+      color: var(--ink);
+      background: var(--gold);
+      transition: all 0.35s;
+      cursor: pointer;
+      pointer-events: all;
+      opacity: 1;
+      position: relative;
+      overflow: hidden;
+      animation: ticketGlow 2s ease-in-out infinite;
+    }
+    .ticket-btn:hover {
+      background: transparent;
+      color: var(--gold);
+    }
+    @keyframes ticketGlow {
+      0%, 100% { box-shadow: 0 0 0px rgba(201,168,76,0); }
+      50%       { box-shadow: 0 0 18px rgba(201,168,76,0.55); }
+    }
+    .ticket-countdown {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 0.85rem;
+      color: var(--sepia);
+      letter-spacing: 0.05em;
+      text-align: center;
+    }
+    .ticket-countdown.hidden { display: none; }
+    .ticket-available-msg {
+      font-family: 'IM Fell English', serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      display: none;
+    }
+    .ticket-available-msg.show { display: block; }
+
     @media (max-width: 480px) {
       .cd-box { min-width: 52px; padding: 0.5rem 0.6rem; }
     }
 
 
-    /* ── PAGE TURN TRANSITION ── */
+    /* ── PAGE TRANSITION (fade) ── */
     .page-turn-overlay {
       position: fixed;
       inset: 0;
       z-index: 9998;
       pointer-events: none;
-      perspective: 1200px;
-    }
-    .page-turn-leaf {
-      position: absolute;
-      inset: 0;
       background: var(--parchment);
-      transform-origin: left center;
-      transform: rotateY(-90deg);
       opacity: 0;
-      transition: none;
+      transition: opacity 0.35s ease;
     }
-    .page-turn-leaf.turning {
-      animation: pageTurn 0.9s cubic-bezier(0.645, 0.045, 0.355, 1.000) forwards;
+    .page-turn-overlay.flash {
+      animation: pageFlash 0.7s ease forwards;
     }
-    .page-turn-leaf.turning-back {
-      animation: pageTurnBack 0.9s cubic-bezier(0.645, 0.045, 0.355, 1.000) forwards;
-    }
-    @keyframes pageTurn {
-      0%   { transform: rotateY(-90deg); opacity: 1; }
-      45%  { transform: rotateY(0deg);   opacity: 1; }
-      55%  { transform: rotateY(0deg);   opacity: 1; }
-      100% { transform: rotateY(90deg);  opacity: 0; }
-    }
-    @keyframes pageTurnBack {
-      0%   { transform: rotateY(90deg);  opacity: 1; }
-      45%  { transform: rotateY(0deg);   opacity: 1; }
-      55%  { transform: rotateY(0deg);   opacity: 1; }
-      100% { transform: rotateY(-90deg); opacity: 0; }
+    @keyframes pageFlash {
+      0%   { opacity: 0; }
+      35%  { opacity: 0.85; }
+      65%  { opacity: 0.85; }
+      100% { opacity: 0; }
     }
 
-    /* Section entrance animations triggered by page turn */
-    section {
-      transition: opacity 0.5s ease;
-    }
-
-    /* Ink bleed line that sweeps across on transition */
-    .page-turn-leaf::before {
-      content: '';
-      position: absolute;
-      top: 0; bottom: 0;
-      left: 50%;
-      width: 3px;
-      background: linear-gradient(180deg, transparent, rgba(139,58,26,0.4), var(--gold), rgba(139,58,26,0.4), transparent);
-      transform: translateX(-50%);
-    }
-    .page-turn-leaf::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(90deg,
-        rgba(200,169,126,0.15) 0%,
-        rgba(245,238,220,1) 40%,
-        rgba(232,223,200,0.95) 60%,
-        rgba(200,169,126,0.1) 100%);
-    }
-
-    .hero-ornament {
+        .hero-ornament {
       font-family: 'IM Fell English', serif;
       font-size: clamp(0.7rem, 1.5vw, 0.9rem);
       letter-spacing: 0.35em;
@@ -1025,16 +1040,6 @@
   <!-- BANNER -->
   <div class="estreia-banner">✦ &nbsp; Estreia &nbsp; 07 de abril de 2026 &nbsp;·&nbsp; 19h30 &nbsp;·&nbsp; Cine Bandeirante · Sabará &nbsp; ✦</div>
 
-  <!-- NAV -->
-  <nav>
-    <div class="nav-logo">Era Uma Vez… <span style="font-style:normal;font-size:0.75em;opacity:0.6;">· Josué Henrique</span></div>
-    <ul class="nav-links">
-      <li><a href="#videos" class="nav-link-pt">Vídeos</a></li>
-      <li><a href="#sinopse" class="nav-link-pt">Sinopse</a></li>
-      <li><a href="#entrevista" class="nav-link-pt">Entrevista</a></li>
-      <li><a href="#galeria" class="nav-link-pt">Galeria</a></li><li><a href="#ficha" class="nav-link-pt">Ficha</a></li>
-    </ul>
-  </nav>
 
   <!-- HERO -->
   <section id="hero">
@@ -1069,6 +1074,18 @@
           <div class="cd-box"><span id="cd-secs">00</span><small>seg</small></div>
         </div>
         <p class="countdown-event">07 de abril · 19h30 · Cine Bandeirante · Sabará</p>
+
+        <!-- TICKET BUTTON -->
+        <div class="ticket-wrap">
+          <a id="ticketBtn"
+             href="https://www.sympla.com.br/evento/estreia-era-uma-vez-um-livro/3358813?share_id=whatsapp"
+             target="_blank"
+             class="ticket-btn">
+            ✦ &nbsp; Retirar ingresso gratuito
+          </a>
+          <p class="ticket-countdown" id="ticketCountdown">Disponível em <span id="tc-days">00</span>d <span id="tc-hours">00</span>h <span id="tc-mins">00</span>m <span id="tc-secs">00</span>s</p>
+          <p class="ticket-available-msg" id="ticketAvailableMsg">✦ Ingressos disponíveis agora! ✦</p>
+        </div>
       </div>
     </div>
 
@@ -1390,36 +1407,26 @@
     document.addEventListener('keydown', e => { if(e.key === 'Escape') closeLightbox(); });
 
 
-    // ── PAGE TURN NAVIGATION ──
-    const leaf = document.getElementById('pageTurnLeaf');
-    let isTurning = false;
-
-    function doPageTurn(targetId) {
-      if (isTurning) return;
-      isTurning = true;
-      leaf.classList.remove('turning', 'turning-back');
-      void leaf.offsetWidth; // reflow
-      leaf.classList.add('turning');
-      setTimeout(() => {
-        const target = document.getElementById(targetId);
-        if (target) target.scrollIntoView({ behavior: 'instant' });
-        setTimeout(() => {
-          leaf.classList.remove('turning');
-          isTurning = false;
-        }, 500);
-      }, 450);
-    }
+    // ── NAV SMOOTH SCROLL WITH FADE ──
+    const overlay = document.getElementById('pageTurnOverlay');
 
     document.querySelectorAll('.nav-link-pt').forEach(link => {
       link.addEventListener('click', function(e) {
         e.preventDefault();
-        const href = this.getAttribute('href');
-        const targetId = href.replace('#', '');
-        doPageTurn(targetId);
+        const targetId = this.getAttribute('href').replace('#', '');
+        const target = document.getElementById(targetId);
+        if (!target) return;
+        overlay.classList.add('flash');
+        setTimeout(() => {
+          target.scrollIntoView({ behavior: 'auto', block: 'start' });
+        }, 280);
+        setTimeout(() => {
+          overlay.classList.remove('flash');
+        }, 720);
       });
     });
 
-    // ── HERO SLIDER ──
+        // ── HERO SLIDER ──
     const slides = document.querySelectorAll('.slide');
     let slideIdx = 0;
     setInterval(() => {
@@ -1448,6 +1455,41 @@
     }
     updateCountdown();
     setInterval(updateCountdown, 1000);
+
+    // ── TICKET AVAILABILITY COUNTDOWN ──
+    function updateTicket() {
+      const ticketOpen = new Date('2026-03-25T10:00:00-03:00');
+      const now = new Date();
+      const diff = ticketOpen - now;
+      const btn = document.getElementById('ticketBtn');
+      const tc  = document.getElementById('ticketCountdown');
+      const msg = document.getElementById('ticketAvailableMsg');
+
+      if (diff <= 0) {
+        btn.classList.add('available');
+        tc.classList.add('hidden');
+        msg.classList.add('show');
+        return;
+      }
+      const days  = Math.floor(diff / 86400000);
+      const hours = Math.floor((diff % 86400000) / 3600000);
+      const mins  = Math.floor((diff % 3600000) / 60000);
+      const secs  = Math.floor((diff % 60000) / 1000);
+
+      if (days > 0) {
+        document.getElementById('tc-days').textContent  = days + 'd';
+        document.getElementById('tc-hours').textContent = String(hours).padStart(2,'0') + 'h';
+        document.getElementById('tc-mins').textContent  = String(mins).padStart(2,'0') + 'm';
+        document.getElementById('tc-secs').textContent  = String(secs).padStart(2,'0') + 's';
+      } else {
+        document.getElementById('tc-days').textContent  = '';
+        document.getElementById('tc-hours').textContent = String(hours).padStart(2,'0') + 'h';
+        document.getElementById('tc-mins').textContent  = String(mins).padStart(2,'0') + 'm';
+        document.getElementById('tc-secs').textContent  = String(secs).padStart(2,'0') + 's';
+      }
+    }
+    updateTicket();
+    setInterval(updateTicket, 1000);
 
     // ── CAROUSEL ──
     const track = document.getElementById('carouselTrack');
@@ -1548,9 +1590,7 @@
   </script>
 
 
-  <!-- PAGE TURN OVERLAY -->
-  <div class="page-turn-overlay" id="pageTurnOverlay">
-    <div class="page-turn-leaf" id="pageTurnLeaf"></div>
-  </div>
+  <!-- PAGE TRANSITION OVERLAY -->
+  <div class="page-turn-overlay" id="pageTurnOverlay"></div>
 </body>
 </html>
